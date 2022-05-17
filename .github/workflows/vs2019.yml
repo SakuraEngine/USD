@@ -16,6 +16,8 @@ jobs:
     - name: Build
       shell: cmd
       run: |
+        pip install PySide2
+        pip install PyOpenGL
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         python ./build_scripts/build_usd.py "C:\USD"
     - name: UploadMeta
