@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-2019
-
     steps:
     - uses: actions/checkout@v3
     - name: Build
@@ -20,8 +18,18 @@ jobs:
         pip install PyOpenGL
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         python ./build_scripts/build_usd.py "C:\USD"
+    - name: Cache
+      id: cache
+      uses: actions/cache@v1.1.2
+      with:
+        path: C:\USD
+        key: lastBuiltUSD
+    - name: ZipArtifact
+      uses: montudor/action-zip@v1.0.0
+      with:
+        args: zip -qq -r C:\USD.zip C:\USD
     - name: UploadMeta
       uses: actions/upload-artifact@v3
       with:
         name: artifacts
-        path: C:\USD
+        path: C:\USD.zip
