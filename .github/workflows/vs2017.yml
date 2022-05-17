@@ -1,0 +1,22 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ release ]
+  pull_request:
+    branches: [ release ]
+
+jobs:
+  build:
+
+    runs-on: windows-2017
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: python \build_scripts\build_usd.py "C:\USD"
+    - name: UploadMeta
+      uses: actions/upload-artifact@v3
+      with:
+        name: artifacts
+        path: build/
