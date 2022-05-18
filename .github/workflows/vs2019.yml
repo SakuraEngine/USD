@@ -24,12 +24,12 @@ jobs:
       with:
         path: C:\USD
         key: lastBuiltUSD
-    - name: ZipArtifact
-      uses: montudor/action-zip@v1.0.0
-      with:
-        args: zip -qq -r C:\USD.zip C:\USD
     - name: UploadMeta
       uses: actions/upload-artifact@v3
       with:
         name: artifacts
-        path: C:\USD.zip
+        path: |
+          C:\USD\bin
+          C:\USD\lib
+          C:\USD\include
+          C:\USD\plugin
