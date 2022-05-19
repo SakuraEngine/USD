@@ -1,0 +1,35 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ release ]
+  pull_request:
+    branches: [ release ]
+
+jobs:
+  build-reldbg:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      shell: cmd
+      run: |
+        pip install PySide2
+        pip install PyOpenGL
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        python ./build_scripts/build_usd.py "C:\USD" --build-variant="relwithdebuginfo"
+    - name: Cache
+      id: cache
+      uses: actions/cache@v1.1.2
+      with:
+        path: C:\USD
+        key: lastBuiltUSD
+    - name: UploadMeta
+      uses: actions/upload-artifact@v3
+      with:
+        name: artifacts
+        path: |
+          C:\USD\bin
+          C:\USD\lib
+          C:\USD\include
+          C:\USD\plugin
