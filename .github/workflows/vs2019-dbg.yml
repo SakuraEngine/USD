@@ -7,8 +7,8 @@ on:
     branches: [ release ]
 
 jobs:
-  build-2022:
-    runs-on: windows-latest
+  build-reldbg:
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v3
     - name: Build
@@ -16,8 +16,8 @@ jobs:
       run: |
         pip install PySide2
         pip install PyOpenGL
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        python ./build_scripts/build_usd.py "C:\USD"
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        python ./build_scripts/build_usd.py "C:\USD" --build-variant="debug"
     - name: Cache
       id: cache
       uses: actions/cache@v1.1.2
